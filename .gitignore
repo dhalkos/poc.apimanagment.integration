@@ -1,0 +1,7 @@
+/target/
+.project
+.classpath
+.settings/org.eclipse.core.resources.prefs
+*.prefs
+*.component
+.settings/org.eclipse.wst.common.project.facet.core.xml

@@ -1,22 +1,78 @@
-# Spring-Boot Camel QuickStart
+# Spring-Boot Camel Bank Rest API
 
-This example demonstrates how you can use Apache Camel with Spring Boot
-based on a [fabric8 Java base image](https://github.com/fabric8io/base-images#java-base-images).
+This project exposes 3 REST APIs which return mocked responses
 
-The quickstart uses Spring Boot to configure a little application that includes a Camel
-route that triggers a message every 5th second, and routes the message to a log.
-
-
+### Get Account Balance
+	path:'/camel/api/{ACCOUNT_ID}/balance':
+    method: 'get'      
+    parameters:
+        - in: path
+          name: ACCOUNT_ID
+          description: The account id
+          required: true
+          type: string
+    responses:
+        '200':
+			description: Success
+			schema:
+				$ref: '#/definitions/AccountDetailsJSON'
+			
+### Get Account Transactions	
+	path:'/camel/api/{ACCOUNT_ID}/transactions':
+    method: 'get'      
+	parameters:
+		- in: path
+		  name: ACCOUNT_ID
+		  description: The account id
+		  required: true
+		  type: string
+		- name: obp_from_date
+		  type: string
+		  required: true
+		  in: header
+		  description: "Date of the oldest transaction registered.  (Date format parameter \"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'\" (2014-07-01T00:00:00.000Z)"
+		- name: obp_to_date
+		  type: string
+		  required: true
+		  in: header
+		  description: "Date of the newest transaction registered (Date format parameter \"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'\" (2014-07-01T00:00:00.000Z)"
+	responses:
+		'200':
+			description: Success
+			schema:
+				$ref: '#/definitions/TransactionsJSON'
+				
+### Transfer Ammount from Account
+	path:'/camel/api/{ACCOUNT_ID}/transfer':
+    method: 'post' 
+	parameters:
+        - in: body
+          name: body
+          description: BANK_BODY
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionRequestBodySEPAJSON'
+        - in: path
+          name: ACCOUNT_ID
+          description: The account id
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Success
+          schema:
+            $ref: '#/definitions/TransactionResponseJSON'
+				
 ### Building
 
-The example can be built with
+The project can be built with
 
     mvn clean install
 
 
 ### Running the example locally
 
-The example can be run locally using the following Maven goal:
+The project can be run locally using the following Maven goal:
 
     mvn spring-boot:run
 

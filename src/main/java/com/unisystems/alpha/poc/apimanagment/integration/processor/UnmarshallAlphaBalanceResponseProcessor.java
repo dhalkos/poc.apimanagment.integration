@@ -19,7 +19,7 @@ public class UnmarshallAlphaBalanceResponseProcessor implements Processor {
 		// TODO Auto-generated method stub
 		logger.info("unmarshalling alpha response");
 		
-		exchange.getOut().setBody(new Account("123", exchange.getIn().getHeader("accountId").toString(), "None", "CRBAGRAA", "alpha","101002101047414", new Balance("EUR", new BigDecimal(10)) ));
+		exchange.getIn().setBody(new Account("123", exchange.getIn().getHeader("accountId").toString(), "None", "CRBAGRAA", "alpha","101002101047414", new Balance("EUR", new BigDecimal(10)) ));
 
 	}
 

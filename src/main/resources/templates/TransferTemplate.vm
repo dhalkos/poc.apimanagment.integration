@@ -1,0 +1,71 @@
+<CustomerCreditTransferInitiationV03 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<GrpHdr xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
+		<MsgId>${exchange.properties.reqId}</MsgId> 
+		<CreDtTm>${headers.currentDateTime}</CreDtTm> 
+		<NbOfTxs>1</NbOfTxs> 
+		<InitgPty>
+			<Id>
+				<OrgId>
+					<Othr>
+						<Id>AWBUsername</Id> 
+						<Issr>Alpha</Issr> 
+					</Othr>
+				</OrgId>
+			</Id>
+		</InitgPty>
+	</GrpHdr>
+	<PmtInf xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
+		<PmtInfId>${exchange.properties.reqId}-1</PmtInfId> 
+		<PmtMtd>TRF</PmtMtd> 
+		<PmtTpInf>
+			<SvcLvl>
+				<Cd>SEPA</Cd> 
+			</SvcLvl>
+			<CtgyPurp>
+				<Cd>INTC</Cd> 
+			</CtgyPurp>
+		</PmtTpInf>
+		<ReqdExctnDt>2016-05-12</ReqdExctnDt> 
+		<Dbtr>
+			<Id>
+				<OrgId>
+					<Othr>
+						<Issr>Test debit Reason</Issr> 
+					</Othr>
+				</OrgId>
+			</Id>
+		</Dbtr>
+		<DbtrAcct>
+			<Id>
+				<IBAN>${headers.accountId}</IBAN> 
+			</Id>
+		</DbtrAcct>
+		<DbtrAgt>
+			<FinInstnId>
+				<BIC>GRBAGRAAXXX</BIC> 
+			</FinInstnId>
+		</DbtrAgt>
+		<CdtTrfTxInf>
+			<PmtId>
+				<EndToEndId /> 
+			</PmtId>
+			<Amt>
+				<InstdAmt Ccy="EUR">${body.value.amount}</InstdAmt> 
+			</Amt>
+			<Cdtr>
+				<Nm>Test</Nm> 
+				<Id>
+					<OrgId /> 
+				</Id>
+			</Cdtr>
+			<CdtrAcct>
+				<Id>
+					<IBAN>${body.to.bank_id}</IBAN> 
+				</Id>
+			</CdtrAcct>
+			<RmtInf>
+				<Ustrd>${body.debit_reason}</Ustrd> 
+			</RmtInf>
+		</CdtTrfTxInf>
+	</PmtInf>
+</CustomerCreditTransferInitiationV03>

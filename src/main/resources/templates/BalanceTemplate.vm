@@ -1,0 +1,19 @@
+<Document xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:iso:std:iso:20022:tech:xsd:camt.060.001.03">
+  <AcctRptgReq>
+    <GrpHdr>
+      <MsgId>${exchange.properties.reqId}</MsgId>
+      <CreDtTm>${headers.currentDateTime}</CreDtTm>
+    </GrpHdr>
+    <RptgReq>
+      <ReqdMsgNmId>camt.052.001.06</ReqdMsgNmId>
+      <Acct>
+        <Id>
+          <IBAN>${headers.accountId}</IBAN>
+        </Id>
+      </Acct>
+      <AcctOwnr>
+        <Pty />
+      </AcctOwnr>
+    </RptgReq>
+  </AcctRptgReq>
+</Document>

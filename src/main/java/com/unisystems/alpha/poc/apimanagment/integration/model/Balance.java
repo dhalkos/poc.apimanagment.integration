@@ -5,11 +5,11 @@ import java.math.BigDecimal;
 public class Balance {
 	
 	private String currency;
-	private BigDecimal amount;
+	private String amount;
 	
 	
 	
-	public Balance(String currency, BigDecimal amount) {
+	public Balance(String currency, String amount) {
 		super();
 		this.currency = currency;
 		this.amount = amount;
@@ -23,11 +23,11 @@ public class Balance {
 		this.currency = currency;
 	}
 	
-	public BigDecimal getAmount() {
+	public String getAmount() {
 		return amount;
 	}
 	
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 	

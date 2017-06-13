@@ -15,7 +15,14 @@
  */
 package com.unisystems.alpha.poc.apimanagment.integration;
 
+import org.apache.camel.CamelContext;
+import org.apache.camel.component.http4.HttpComponent;
 import org.apache.camel.component.servlet.CamelHttpTransportServlet;
+import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.util.jsse.KeyManagersParameters;
+import org.apache.camel.util.jsse.KeyStoreParameters;
+import org.apache.camel.util.jsse.SSLContextParameters;
+import org.apache.camel.util.jsse.TrustManagersParameters;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -30,7 +37,15 @@ public class Application  {
     // must have a main method spring-boot can run
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+        
+        CamelContext context = new DefaultCamelContext();
         System.out.println("----------------------------------------TEST---------------------------------");
+        try {
+			configureHttpClient(context);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @Bean
@@ -40,6 +55,29 @@ public class Application  {
         return registration;
     }
     
+    
+    private static void configureHttpClient(CamelContext context) throws Exception {
+    	
+    	KeyStoreParameters ksp = new KeyStoreParameters();
+    	ksp.setResource("certificates/dhalkTrustore.jks");
+    	ksp.setPassword("unisystems");
+    	 
+    	KeyManagersParameters kmp = new KeyManagersParameters();
+    	kmp.setKeyStore(ksp);
+    	kmp.setKeyPassword("unisystems");
+    	
+    	
+    	TrustManagersParameters tmp = new TrustManagersParameters();
+        tmp.setKeyStore(ksp);
+    	 
+    	SSLContextParameters scp = new SSLContextParameters();
+    	scp.setKeyManagers(kmp);
+    	scp.setTrustManagers(tmp);
+    	 
+    	HttpComponent httpComponent = context.getComponent("https4", HttpComponent.class);
+    	httpComponent.setSslContextParameters(scp);
+    }
+
     /*
     @Override
     public void configure() throws Exception {

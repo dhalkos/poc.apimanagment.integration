@@ -1,0 +1,30 @@
+<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:iso:std:iso:20022:tech:xsd:camt.060.001.03">
+  <AcctRptgReq>
+    <GrpHdr>
+      <MsgId>${exchange.properties.reqId}</MsgId>
+      <CreDtTm>${headers.currentDateTime}</CreDtTm>
+    </GrpHdr>
+    <RptgReq>
+      <ReqdMsgNmId>camt.053.001.06</ReqdMsgNmId>
+      <Acct>
+        <Id>
+          <IBAN>${headers.accountId}</IBAN>
+        </Id>
+      </Acct>
+      <AcctOwnr>
+        <Pty />
+      </AcctOwnr>
+      <RptgPrd>
+        <FrToDt>
+          <FrDt>${headers.fromDate}</FrDt>
+          <ToDt>${headers.toDate}</ToDt>
+        </FrToDt>
+        <FrToTm>
+          <FrTm>${headers.fromTime}</FrTm>
+          <ToTm>${headers.toTime}</ToTm>
+        </FrToTm>
+        <Tp>ALLL</Tp>
+      </RptgPrd>
+    </RptgReq>
+  </AcctRptgReq>
+</Document>

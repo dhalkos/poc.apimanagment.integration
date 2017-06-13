@@ -15,7 +15,7 @@ public class Account {
 		
 		super();
 		this.number = number;
-		IBAN = iBAN;
+		this.IBAN = iBAN;
 		this.label = label;
 		this.swift_bic = swift_bic;
 		this.bank_id = bank_id;

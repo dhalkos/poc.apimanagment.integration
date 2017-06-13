@@ -16,8 +16,7 @@ public class TransactionDetails {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TransactionDetails(AmountOfMoney new_balance, String description, String completed, String type,
-			AmountOfMoney value, String posted) {
+	public TransactionDetails(AmountOfMoney new_balance, String description, String completed, String type, AmountOfMoney value, String posted) {
 		super();
 		this.new_balance = new_balance;
 		this.description = description;

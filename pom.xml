@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.unisystems.alpha</groupId>
-  <artifactId>poc.apimanagment.integration</artifactId>
+  <artifactId>poc-apimanagment</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
   <name>Fabric8 :: Quickstarts :: Spring-Boot :: Camel</name>
@@ -14,13 +14,13 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- configure the versions you want to use here -->
-    <fabric8.version>2.2.170.redhat-000004</fabric8.version>
-    <spring-boot.version>1.4.1.RELEASE</spring-boot.version>
+    <fabric8.version>2.2.192</fabric8.version>
+    <spring-boot.version>1.4.3.RELEASE</spring-boot.version>
 
     <!-- maven plugin versions -->
-    <fabric8.maven.plugin.version>3.1.80.redhat-000004</fabric8.maven.plugin.version>
-    <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
-    <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
+    <fabric8.maven.plugin.version>3.2.20</fabric8.maven.plugin.version>
+    <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
   </properties>
 
   <dependencyManagement>
@@ -93,7 +93,21 @@
     	<groupId>javax.ws.rs</groupId>
     	<artifactId>javax.ws.rs-api</artifactId>    
 	</dependency>
-    
+    <dependency>
+	    <groupId>org.apache.camel</groupId>
+	    <artifactId>camel-velocity</artifactId>	    
+	</dependency>	
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+   		<artifactId>camel-http4</artifactId>
+ 	</dependency>
+	 
+	 <dependency>
+    	<groupId>org.apache.santuario</groupId>
+    	<artifactId>xmlsec</artifactId>
+    	<version>2.0.2</version>    
+	</dependency>
+	
   </dependencies>
 
   <build>
@@ -106,6 +120,7 @@
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
+		  <fork>true</fork>
         </configuration>
       </plugin>
       <plugin>

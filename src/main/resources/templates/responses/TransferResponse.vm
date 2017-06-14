@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-16"?>
+<CustomerPaymentStatusReportV03 xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <GrpHdr xmlns="urn:iso:std:iso:20022:tech:xsd:pain.002.001.03">
+    <MsgId>43e9c604-5bee-4418-838b-059497bf5a83</MsgId>
+    <CreDtTm>2016-05-23T11:39:45.2686275+03:00</CreDtTm>
+    <DbtrAgt>
+      <FinInstnId>
+        <BIC>GRBAGRAAXXX</BIC>
+      </FinInstnId>
+    </DbtrAgt>
+  </GrpHdr>
+  <OrgnlGrpInfAndSts xmlns="urn:iso:std:iso:20022:tech:xsd:pain.002.001.03">
+    <OrgnlMsgId>81921dc5-97db-4a6e-8490-6631b2ebeaf1</OrgnlMsgId>
+    <OrgnlMsgNmId>pain.001</OrgnlMsgNmId>
+  </OrgnlGrpInfAndSts>
+  <OrgnlPmtInfAndSts xmlns="urn:iso:std:iso:20022:tech:xsd:pain.002.001.03">
+    <OrgnlPmtInfId>18138e23-f5e4-4ce1-871e-ce6e6369eb9b</OrgnlPmtInfId>
+    <TxInfAndSts>
+      <OrgnlEndToEndId />
+      <TxSts>RJCT</TxSts>
+      <StsRsnInf>
+        <Orgtr>
+          <Id>
+            <OrgId>
+              <BICOrBEI>CRBAGRAAXXX</BICOrBEI>
+            </OrgId>
+          </Id>
+        </Orgtr>
+        <Rsn>
+          <Cd>32</Cd>
+        </Rsn>
+        <AddtlInf>Λάθος Συστήματος, Λάνθασμένο Subscription</AddtlInf>
+      </StsRsnInf>
+    </TxInfAndSts>
+  </OrgnlPmtInfAndSts>
+ </CustomerPaymentStatusReportV03>

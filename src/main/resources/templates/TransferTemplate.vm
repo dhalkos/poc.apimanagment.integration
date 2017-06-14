@@ -1,5 +1,5 @@
-<CustomerCreditTransferInitiationV03 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<GrpHdr xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
+<CustomerCreditTransferInitiationV03 xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+	<GrpHdr xmlns='urn:iso:std:iso:20022:tech:xsd:pain.001.001.03'>
 		<MsgId>${exchange.properties.reqId}</MsgId> 
 		<CreDtTm>${headers.currentDateTime}</CreDtTm> 
 		<NbOfTxs>1</NbOfTxs> 
@@ -7,14 +7,14 @@
 			<Id>
 				<OrgId>
 					<Othr>
-						<Id>AWBUsername</Id> 
+						<Id>${headers.userAccountId}</Id> 
 						<Issr>Alpha</Issr> 
 					</Othr>
 				</OrgId>
 			</Id>
 		</InitgPty>
 	</GrpHdr>
-	<PmtInf xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
+	<PmtInf xmlns='urn:iso:std:iso:20022:tech:xsd:pain.001.001.03'>
 		<PmtInfId>${exchange.properties.reqId}-1</PmtInfId> 
 		<PmtMtd>TRF</PmtMtd> 
 		<PmtTpInf>
@@ -25,12 +25,12 @@
 				<Cd>INTC</Cd> 
 			</CtgyPurp>
 		</PmtTpInf>
-		<ReqdExctnDt>2016-05-12</ReqdExctnDt> 
+		<ReqdExctnDt>${body.request_excecution_date}</ReqdExctnDt> 
 		<Dbtr>
 			<Id>
 				<OrgId>
 					<Othr>
-						<Issr>Test debit Reason</Issr> 
+						<Issr>${body.debit_reason}</Issr> 
 					</Othr>
 				</OrgId>
 			</Id>
@@ -42,7 +42,7 @@
 		</DbtrAcct>
 		<DbtrAgt>
 			<FinInstnId>
-				<BIC>GRBAGRAAXXX</BIC> 
+				<BIC>${body.bic}</BIC> 
 			</FinInstnId>
 		</DbtrAgt>
 		<CdtTrfTxInf>
@@ -50,21 +50,18 @@
 				<EndToEndId /> 
 			</PmtId>
 			<Amt>
-				<InstdAmt Ccy="EUR">${body.value.amount}</InstdAmt> 
+				<InstdAmt Ccy='EUR'>${body.value.amount}</InstdAmt> 
 			</Amt>
 			<Cdtr>
-				<Nm>Test</Nm> 
-				<Id>
-					<OrgId /> 
-				</Id>
+				<Nm>Test</Nm>				
 			</Cdtr>
 			<CdtrAcct>
 				<Id>
-					<IBAN>${body.to.bank_id}</IBAN> 
+					<IBAN>${body.to.id}</IBAN> 
 				</Id>
 			</CdtrAcct>
 			<RmtInf>
-				<Ustrd>${body.debit_reason}</Ustrd> 
+				<Ustrd>${body.credit_category_purpose}</Ustrd> 
 			</RmtInf>
 		</CdtTrfTxInf>
 	</PmtInf>

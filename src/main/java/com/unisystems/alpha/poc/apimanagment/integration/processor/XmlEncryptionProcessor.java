@@ -62,7 +62,7 @@ public class XmlEncryptionProcessor implements Processor {
 		SecretKey tmp = keyfactory.generateSecret(spec);
 		SecretKey secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");*/
 		
-	    System.out.println("----->" + secretKey.getEncoded().length);
+	    //System.out.println("----->" + secretKey.getEncoded().length);
 	    XMLCipher keyCipher = XMLCipher.getInstance(XMLCipher.RSA_v1dot5);
 	    keyCipher.init(XMLCipher.WRAP_MODE, keyEncryptKey);
 	    EncryptedKey encryptedKey = keyCipher.encryptKey(xmlDocument, secretKey);

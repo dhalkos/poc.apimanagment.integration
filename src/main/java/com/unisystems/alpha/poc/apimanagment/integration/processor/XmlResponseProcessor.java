@@ -20,12 +20,21 @@ public class XmlResponseProcessor implements Processor {
         
         /*System.out.println("==============================================================================");
         System.out.println(body);
-        System.out.println("==============================================================================");*/
-        
+        System.out.println("==============================================================================");
+        */
         Pattern pattern = Pattern.compile("Serialization/\">(.+?)</string>");
 		Matcher matcher = pattern.matcher(body);
 		matcher.find();
-		exchange.getIn().setBody(matcher.group(1));
+		try {
+			exchange.getIn().setBody(matcher.group(1));
+		} catch (Exception e) {
+		
+			pattern = Pattern.compile("\"\\?>(.+?)>\"");
+			matcher = pattern.matcher(body);
+			matcher.find();
+			exchange.getIn().setBody(matcher.group(1).replace("\\\"", "\"") +">");
+			
+		}
 
 	}
 

@@ -60,11 +60,24 @@ public class TransactionsResponseProcessor implements Processor {
         XPath xpath = xpathFactory.newXPath();
         //xpath.setNamespaceContext(new NamespaceResolver(doc));
         
+        NodeList statmentNodes = (NodeList) xpath.evaluate("/Document/BkToCstmrStmt/Stmt", doc, XPathConstants.NODESET);
+        NodeList transactionNodes = (NodeList) xpath.evaluate("/Document/BkToCstmrStmt/Stmt/Ntry", doc, XPathConstants.NODESET);
         
-        NodeList transactionNodes = (NodeList) xpath.evaluate("/Document/BkToCstmrStmt/Stmt", doc, XPathConstants.NODESET);
+        XPathExpression stmtInfoXpath = xpath.compile("AddtlStmtInf/text()");
         
+        String stmtInfo = stmtInfoXpath.evaluate(statmentNodes.item(0),XPathConstants.STRING).toString();
+        if(stmtInfo.contains("Wrong Account")) {
+        	exchange.getIn().setBody("OBP-30018: Bank Account not found. Please specify valid values for ACCOUNT_ID.");
+        	exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, 404);
+        	return;
+        }  else if(stmtInfo.contains("έληξε")) {
+        	exchange.getIn().setBody("Unauthorized Access:OBP-20001: User not logged in. Authentication is required.");
+        	exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, 401);
+        	return;
+        }
         
-        XPathExpression id = xpath.compile("Id/text()");
+        XPathExpression id = xpath.compile("AcctSvcrRef/text()");
+        
         
         XPathExpression this_iban = xpath.compile("Acct/Id/IBAN/text()");
         XPathExpression this_label = xpath.compile("Acct/Ownr/Nm/text()");
@@ -73,18 +86,19 @@ public class TransactionsResponseProcessor implements Processor {
         XPathExpression other_iban = xpath.compile("RltdAcct/Id/IBAN/text()");
         XPathExpression other_label = xpath.compile("RltdAcct/Nm/text()");
         
-        XPathExpression creationDateTime = xpath.compile("CreDtTm/text()");
-        XPathExpression ammount = xpath.compile("TxsSummry/TtlNetNtry/Amt/text()");
-        XPathExpression type = xpath.compile("TxsSummry/TtlNetNtry/CdtDbtInd/text()");
+        XPathExpression creationDateTime = xpath.compile("BookgDt/Dt/text()");
+        XPathExpression ammount = xpath.compile("Amt/text()");
+        XPathExpression type = xpath.compile("CdtDbtInd/text()");
         
         
         for (int i = 0; i < transactionNodes.getLength(); i++) {
         	
         	Node transaction = transactionNodes.item(i);
+        	Node thisIban = statmentNodes.item(0);
         	
         	//System.out.println(Charset.forName("UTF-8").encode(this_label.evaluate(transaction, XPathConstants.STRING).toString().getBytes("UTF-8")));
         	transactions.add(new Transaction(id.evaluate(transaction, XPathConstants.STRING).toString(),
-    						 				new Account(null, this_iban.evaluate(transaction, XPathConstants.STRING).toString(), this_label.evaluate(transaction, XPathConstants.STRING).toString(), this_swift_bic.evaluate(transaction, XPathConstants.STRING).toString(), null, null ,null),
+    						 				new Account(null, this_iban.evaluate(thisIban, XPathConstants.STRING).toString(), this_label.evaluate(thisIban, XPathConstants.STRING).toString(), this_swift_bic.evaluate(thisIban, XPathConstants.STRING).toString(), null, null ,null),
     						 				new Account(null, other_iban.evaluate(transaction, XPathConstants.STRING).toString(), other_label.evaluate(transaction, XPathConstants.STRING).toString(),null, null, null ,null),
     						 				new TransactionDetails(null, null, creationDateTime.evaluate(transaction, XPathConstants.STRING).toString(), type.evaluate(transaction, XPathConstants.STRING).toString(), new AmountOfMoney(ammount.evaluate(transaction, XPathConstants.STRING).toString(), "EUR"), null)));
        }
